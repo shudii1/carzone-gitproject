@@ -1,14 +1,25 @@
 from django.shortcuts import render
 
-
 # Create your views here.
+from pages.models import Team
+
 
 def home(requsest):
-    return render(requsest, 'pages/home.html')
+    # fetch all data from database to teams
+    teams = Team.objects.all()
+    # pass dictionary of model team to pass data of teams model in html using data dictionary
+    data = {
+        'teams': teams,
+    }
+    return render(requsest, 'pages/home.html', data)
 
 
 def about(request):
-    return render(request, 'pages/about.html')
+    teams = Team.objects.all()
+    data = {
+        'teams': teams,
+    }
+    return render(request, 'pages/about.html',data)
 
 
 def services(request):
