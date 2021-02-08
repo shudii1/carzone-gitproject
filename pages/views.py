@@ -2,14 +2,19 @@ from django.shortcuts import render
 
 # Create your views here.
 from pages.models import Team
+from cars.models import Car
 
 
 def home(requsest):
     # fetch all data from database to teams
     teams = Team.objects.all()
+    featured_cars = Car.objects.order_by('-created_date').filter(is_featured=True)
+    all_cars = Car.objects.order_by('-created_date')
     # pass dictionary of model team to pass data of teams model in html using data dictionary
     data = {
         'teams': teams,
+        'featured_cars': featured_cars,
+        'all_cars': all_cars,
     }
     return render(requsest, 'pages/home.html', data)
 
@@ -19,7 +24,7 @@ def about(request):
     data = {
         'teams': teams,
     }
-    return render(request, 'pages/about.html',data)
+    return render(request, 'pages/about.html', data)
 
 
 def services(request):
