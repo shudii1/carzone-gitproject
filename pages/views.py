@@ -1,4 +1,8 @@
-from django.shortcuts import render
+
+from django.contrib import messages
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.shortcuts import render, redirect
 
 # Create your views here.
 from pages.models import Team
@@ -46,4 +50,25 @@ def services(request):
 
 
 def contact(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        subject = request.POST['subject']
+        phone = request.POST['phone']
+        message = request.POST['message']
+
+        email_subject = 'You have new message from Carzone regarding ' + subject
+        message_body = 'Name : ' + name + '. Email ' + email + '. Phone ' + phone + ' . Message ' + message
+        # sending messages to admin whenever new inquiry posted .
+        admin_info = User.objects.get(is_superuser=True)
+        admin_email = admin_info.email
+        send_mail(
+            email_subject,  # subject
+            message_body,  # message
+            'noreply1622@gmail.com',  # admin gmail
+            [admin_email],
+            fail_silently=False,
+        )
+        messages.success(request, 'Thank you for contacting .We will get you back shortly')
+        return redirect('contact')
     return render(request, 'pages/contact.html')
