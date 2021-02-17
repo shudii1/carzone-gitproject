@@ -26,7 +26,7 @@ SECRET_KEY = '@2=o4_=tkv^)b))6r2_r%^@j0m-f=*n^mx2&-@me^-^o!e2ciu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['floating-badlands-41165.heroku.com','carzoneapp.co','www.carweb.co']
 LOGIN_REDIRECT_URL = 'dashboard'
 # Application definition
 
